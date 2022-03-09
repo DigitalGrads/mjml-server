@@ -3,7 +3,7 @@ FROM node:16-alpine
 ENV NODE_ENV=production
 
 ENV CORS=""
-ENV PORT=80
+ENV PORT=8080
 
 ENV MJML_KEEP_COMMENTS=false
 ENV MJML_VALIDATION_LEVEL=soft
@@ -25,10 +25,10 @@ RUN set -ex \
 COPY index.js ./index.js
 
 COPY healthcheck.sh /app/healthcheck.sh
-
+USER node
 HEALTHCHECK --start-period=10s --retries=1 CMD /app/healthcheck.sh || exit 1
 
-EXPOSE 80
+EXPOSE 8080
 
 # ENTRYPOINT [ "node", "--inspect=0.0.0.0:9229", "index.js" ]
 ENTRYPOINT [ "node", "index.js" ]
